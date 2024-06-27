@@ -1,0 +1,11 @@
+.gameField {
+	@apply relative w-full h-1/2 bg-[url("../../../public/assets/background.png")] bg-contain;
+
+	.userTank {
+		@apply absolute bottom-4 left-0;
+	}
+
+	.botTank {
+		@apply absolute bottom-4 right-0;
+	}
+}
