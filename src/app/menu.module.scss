@@ -1,0 +1,11 @@
+.menuItem:hover::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -12.5%;
+    transform: translateY(-50%);
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: url('/assets/tank.png');
+}
