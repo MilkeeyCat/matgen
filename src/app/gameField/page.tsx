@@ -1,4 +1,4 @@
-import { GameField } from './gameField'
+import { GameField } from './GameField'
 
 export default function GameFieldPage() {
 	return <GameField />

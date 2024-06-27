@@ -1,3 +1,19 @@
+.problemSolve {
+	@apply w-full h-1/2 p-10 flex gap-4;
+
+	.problemText {
+		@apply text-base max-w-96 w-full;
+	}
+
+	input {
+		@apply h-10 w-52 pl-4 border border-purple-500 rounded-lg;
+	}
+
+	button {
+		@apply h-10 w-52 text-center bg-purple-500 rounded-lg text-white;
+	}
+}
+
 .gameField {
 	@apply relative w-full h-1/2 bg-[url("../../../public/assets/background.png")] bg-contain;
 
@@ -7,5 +23,13 @@
 
 	.botTank {
 		@apply absolute bottom-4 right-0;
+	}
+
+	.gun {
+		@apply absolute bottom-[120px] left-32 w-20 h-2 bg-[#196011];
+	}
+
+	.bullet {
+		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-[116px] left-52 transition-transform duration-500;
 	}
 }
