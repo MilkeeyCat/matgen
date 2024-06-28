@@ -30,8 +30,15 @@ export function GameField({
 
 	const bulletStyle: React.CSSProperties = {
 		transform: isAttack
-			? `translateX(${fire({ speed, time, answer, level })}px)`
+			? `translateX(${fire({
+					speed,
+					time,
+					answer,
+					distanceBetweenTanks,
+					level,
+			  })}px)`
 			: 'translateX(0)',
+		transition: `transform ${isAttack ? time : 0.1}s ease-in-out`,
 	}
 
 	return (

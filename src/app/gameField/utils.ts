@@ -1,14 +1,20 @@
 interface IFire {
 	speed: number
 	time: number
+	distanceBetweenTanks: number
 	answer: number
 	level: number
 }
 
-export const fire = ({ speed, time, answer, level }: IFire) => {
+export const fire = ({
+	speed,
+	time,
+	distanceBetweenTanks,
+	answer,
+	level,
+}: IFire) => {
 	if (level === 1) {
 		if (answer === speed) {
-			console.log(1)
 			return speed * time
 		} else if (answer - speed < 30 && answer - speed > 0) {
 			return speed * time + 120
@@ -17,5 +23,13 @@ export const fire = ({ speed, time, answer, level }: IFire) => {
 		} else {
 			return answer * time
 		}
+	}
+	if (level === 2) {
+		if (answer === time) {
+			return speed * time
+		}
+	}
+	if (level === 3) {
+		return distanceBetweenTanks
 	}
 }

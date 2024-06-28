@@ -18,25 +18,25 @@ export function Level1() {
 			Math.round(Math.random() * ((window.innerWidth * 40) / 100) + 1)
 		)
 		setTime(Math.round(Math.random() * 7) + 5)
-	}, [])
+	}, [level])
 
 	useEffect(() => {
 		const calculateDistance = () => {
-			return window.innerWidth - 128 - botPosition - 290
+			return window.innerWidth - 128 - botPosition - 280
 		}
 
 		const distance = calculateDistance()
 		setDistanceBetweenTanks(distance)
-		setSpeed(distance / time)
-	}, [time])
+		setSpeed(Math.floor(Number(distance / time)))
+	}, [time, level])
 
 	const handleAttack = () => {
 		setIsAttack(true)
 		setTimeout(() => {
 			setIsAttack(false)
-		}, 750)
-
-		validate({ speed, answer, level })
+			if (validate({ speed, answer, time, distanceBetweenTanks, level }))
+				setLevel(prev => prev + 1)
+		}, time * 1000)
 	}
 
 	return (
@@ -47,6 +47,20 @@ export function Level1() {
 						DISTANCE: {distanceBetweenTanks} <br />
 						TIME: {time} <br />
 						VELOCITY: ??? (in integer, rounded to bottom)
+					</p>
+				)}
+				{level === 2 && (
+					<p className={styles.problemText}>
+						DISTANCE: {distanceBetweenTanks} <br />
+						VELOCITY: {speed} <br />
+						TIME: ??? (in integer, rounded to bottom)
+					</p>
+				)}
+				{level === 3 && (
+					<p className={styles.problemText}>
+						TIME: {time} <br />
+						VELOCITY: {speed} <br />
+						DISTANCE: ??? (in integer, rounded to bottom)
 					</p>
 				)}
 
