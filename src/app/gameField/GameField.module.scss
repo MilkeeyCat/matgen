@@ -1,28 +1,12 @@
-.problemSolve {
-	@apply w-full h-1/2 p-10 flex gap-4;
-
-	.problemText {
-		@apply text-base max-w-96 w-full;
-	}
-
-	input {
-		@apply h-10 w-52 pl-4 border border-purple-500 rounded-lg;
-	}
-
-	button {
-		@apply h-10 w-52 text-center bg-purple-500 rounded-lg text-white;
-	}
-}
-
 .gameField {
 	@apply relative w-full h-1/2 bg-[url("../../../public/assets/background.png")] bg-contain;
 
 	.userTank {
-		@apply absolute bottom-4 left-0;
+		@apply absolute bottom-4 left-0  w-[19rem];
 	}
 
 	.botTank {
-		@apply absolute bottom-4 right-0;
+		@apply absolute bottom-4 w-[19rem];
 	}
 
 	.gun {
