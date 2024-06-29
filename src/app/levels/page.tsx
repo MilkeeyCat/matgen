@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import styles from '../menu.module.scss'
-import { font } from '../font'
+import { font } from '../menuFont'
 
 const gameOptions = [
-    ['Uniform linear motion', '/level1'],
+    ['Uniform linear motion', '/level1/theory'],
     ['Accelerated motion(soon)', null],
     ['Verctors(soon)', null],
     ['Free fall(soon)', null],

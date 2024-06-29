@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import styles from './menu.module.scss'
-import { font } from './font'
+import { font } from './menuFont'
 
 const gameOptions = [
     ['solo', '/levels'],
