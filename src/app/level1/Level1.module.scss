@@ -3,6 +3,15 @@
 .problemSolve {
 	@apply w-full h-1/2 p-8;
 
+	p {
+		color: #fff;
+		text-align: center;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: #000;
+		font-family: 'Titan One';
+		font-size: 40px;
+	}
+
 	.controller {
 		@apply flex justify-between;
 
@@ -39,6 +48,23 @@
 			-webkit-text-stroke-width: 1px;
 			-webkit-text-stroke-color: #000;
 			font-family: 'Titan One';
+		}
+	}
+
+	.congratsText {
+		@apply flex flex-col gap-8 mt-16 items-center;
+
+		p {
+			color: #fff;
+			text-align: center;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-family: 'Titan One';
+			font-size: 40px;
+		}
+
+		.stars {
+			@apply flex gap-8 justify-center;
 		}
 	}
 
