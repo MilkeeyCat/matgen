@@ -1,13 +1,16 @@
 import Link from 'next/link'
-import styles from './menu.module.scss'
-import { font } from './font'
+import styles from '../menu.module.scss'
+import { font } from '../font'
 
 const gameOptions = [
-    ['solo', '/levels'],
-    ['multiplayer(soon)', null],
+    ['Uniform linear motion', '/level1'],
+    ['Accelerated motion(soon)', null],
+    ['Verctors(soon)', null],
+    ['Free fall(soon)', null],
+    ['Gravity(soon)', null],
 ]
 
-export default function Home() {
+export default function Levels() {
     const textElementStyle: React.CSSProperties = {
         display: 'inline',
         position: 'relative',
@@ -24,7 +27,7 @@ export default function Home() {
                 className={`${font.className} text-[8.25rem]`}
                 style={textElementStyle}
             >
-                Battle City
+                Levels
             </p>
             <div className='flex flex-col gap-14'>
                 {gameOptions.map(item => (
