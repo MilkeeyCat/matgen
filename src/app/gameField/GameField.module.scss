@@ -1,19 +1,19 @@
 .gameField {
-	@apply relative w-full h-1/2 bg-[url("../../../public/assets/background.png")] bg-contain;
+	@apply relative w-full h-1/2;
 
 	.userTank {
-		@apply absolute bottom-4 left-0  w-[19rem];
+		@apply absolute bottom-14 left-0  w-[19rem];
 	}
 
 	.botTank {
-		@apply absolute bottom-4 w-[19rem];
+		@apply absolute bottom-14 w-[19rem];
 	}
 
 	.gun {
-		@apply absolute bottom-[120px] left-32 w-20 h-2 bg-[#196011];
+		@apply absolute bottom-40 left-32 w-20 h-2 bg-[#196011];
 	}
 
 	.bullet {
-		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-[116px] left-52;
+		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-[9.75rem] left-52;
 	}
 }
