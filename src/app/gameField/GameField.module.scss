@@ -2,26 +2,26 @@
 	@apply relative w-full h-1/2;
 
 	.userTank {
-		@apply absolute bottom-14 left-0  w-[19rem];
+		@apply absolute bottom-20 left-0  w-[19rem];
 	}
 
 	.botTank {
-		@apply absolute bottom-14 w-[19rem];
-	}
-
-	.rotatedGun {
-		@apply absolute bottom-48 left-32 w-20 h-2 bg-[#196011] -rotate-45;
+		@apply absolute bottom-20 w-[19rem];
 	}
 
 	.gun {
-		@apply absolute bottom-40 left-32 w-20 h-2 bg-[#196011];
+		@apply absolute bottom-[8.75rem] left-52 w-20 h-2 bg-[#033500];
+	}
+
+	.rotatedGun {
+		@apply absolute bottom-44 left-52 w-20 h-2 bg-[#033500] -rotate-45;
 	}
 
 	.bullet {
-		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-[9.75rem] left-52;
+		@apply absolute bg-yellow-600 w-4 h-4 rounded-full bottom-[8.5rem] left-72;
 	}
 
 	.rotatedBullet {
-		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-56 left-48;
+		@apply absolute bg-yellow-600 w-4 h-4 rounded-full bottom-52 left-[17.12rem];
 	}
 }

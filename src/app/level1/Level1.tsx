@@ -170,6 +170,7 @@ export function Level1() {
 				answer={answer}
 				level={level}
 				gameState={gameState}
+				isCorrectAnswer={isCorrectAnswer}
 			/>
 		</div>
 	)

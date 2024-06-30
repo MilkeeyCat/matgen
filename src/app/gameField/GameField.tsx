@@ -2,6 +2,7 @@
 import { IProperties } from '@/types/gameType'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
+import botTankGif from '../../../public/assets/botTank.gif'
 import botTank from '../../../public/assets/botTank.png'
 import userTank from '../../../public/assets/userTank.png'
 import styles from './GameField.module.scss'
@@ -16,7 +17,9 @@ export function GameField({
 	level,
 	gameState,
 	seconds,
-}: IProperties) {
+
+	isCorrectAnswer,
+}: IProperties & { isCorrectAnswer: boolean }) {
 	const botTankStyle: React.CSSProperties = {
 		right: `${botPosition}px`,
 	}
@@ -63,14 +66,25 @@ export function GameField({
 				height={100}
 			/>
 
-			<Image
-				src={botTank}
-				className={styles.botTank}
-				alt=''
-				width={300}
-				height={100}
-				style={botTankStyle}
-			/>
+			{isCorrectAnswer ? (
+				<Image
+					src={botTankGif}
+					className={styles.botTank}
+					alt='Bot Tank GIF'
+					width={300}
+					height={100}
+					style={botTankStyle}
+				/>
+			) : (
+				<Image
+					src={botTank}
+					className={styles.botTank}
+					alt=''
+					width={300}
+					height={100}
+					style={botTankStyle}
+				/>
+			)}
 
 			<div className={`${level === 2 ? styles.rotatedGun : styles.gun}`}></div>
 

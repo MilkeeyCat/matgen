@@ -161,6 +161,7 @@ export function Level2() {
 				level={level}
 				gameState={gameState}
 				seconds={seconds}
+				isCorrectAnswer={isCorrectAnswer}
 			/>
 		</div>
 	)
