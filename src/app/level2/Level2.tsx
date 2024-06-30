@@ -1,147 +1,155 @@
 'use client'
+import { StopWatch } from '@/components/StopWatch/StopWatch'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect, useRef, useState } from 'react'
 import star from '../../../public/assets/star.png'
 import { GameField } from '../gameField/GameField'
 import styles from './Level2.module.scss'
+import { usePrepare, validateAnswer } from './utils'
 
 export function Level2() {
-	const [level, setLevel] = useState<number>(4)
-	const [distanceBetweenTanks, setDistanceBetweenTanks] = useState<number>(0)
-	const [isAttack, setIsAttack] = useState<boolean>(false)
-	const [answer, setAnswer] = useState<number>(1000)
+	const starImages = Array(3).fill(star)
+	const router = useRouter()
+	const input = useRef<HTMLInputElement>(null)
+
+	const [gameState, setGameState] = useState<'prepare' | 'attack' | 'result'>(
+		'prepare'
+	)
+	const [level, setLevel] = useState<number>(2)
 	const [botPosition, setBotPosition] = useState<number>(0)
 	const [time, setTime] = useState<number>(0)
+	const [distanceBetweenTanks, setDistanceBetweenTanks] = useState<number>(0)
 	const [speed, setSpeed] = useState<number>(0)
-	const [resultText, setResultText] = useState<string>('')
+
+	useEffect(() => {
+		if (gameState === 'prepare') {
+			const { botPosition, time, distanceBetweenTanks, speed } = usePrepare()
+			setSpeed(speed)
+			setBotPosition(botPosition)
+			setTime(time)
+			setDistanceBetweenTanks(distanceBetweenTanks)
+		}
+	}, [gameState])
+
+	const [answer, setAnswer] = useState<number>(0)
 	const [isCorrectAnswer, setIsCorrectAnswer] = useState<boolean>(false)
-	const [timer, setTimer] = useState<number>(0.0)
-
-	useEffect(() => {
-		setBotPosition(
-			Math.round(Math.random() * ((window.innerWidth * 40) / 100) + 1)
-		)
-		setTime(Math.round(Math.random() * 7) + 5)
-	}, [level])
-
-	useEffect(() => {
-		if (typeof window !== 'undefined' && level === 5) {
-			redirect('/')
-		}
-
-		const calculateDistance = () => {
-			return window.innerWidth - 128 - botPosition - 280
-		}
-
-		const distance = calculateDistance()
-		setDistanceBetweenTanks(distance)
-		setSpeed(Math.floor(Number(distance / time)))
-	}, [time, level, botPosition])
-
-	useEffect(() => {
-		if (isAttack) {
-			const interval = setInterval(() => setTimer(prev => prev + 0.1), 100)
-
-			return () => clearInterval(interval)
-		} else {
-			setTimer(0.0)
-		}
-	}, [isAttack])
-
-	const [isClient, setIsClient] = useState(false)
 
 	const handleAttack = () => {
-		setIsAttack(true)
-		setTimeout(() => {
-			setIsAttack(false)
-			if (
-				answer ===
-				Math.floor(Math.abs((2 * 800 - 2 * speed * time * 0.707) / time ** 2))
-			) {
-				setIsCorrectAnswer(true)
-				setTimeout(() => {
-					setIsCorrectAnswer(false)
-					setLevel(prev => prev + 1)
-				}, 3000)
-			} else {
-				setResultText('Incorrect Answer')
-				setTimeout(() => {
-					setResultText('')
-				}, 8000)
-			}
-		}, time * 1300)
+		if (input.current) {
+			const enteredValue = Number(input.current.value)
+			setAnswer(enteredValue)
+
+			setGameState('attack')
+			setTimeout(() => {
+				setGameState('result')
+				if (
+					validateAnswer({
+						speed,
+						answer: enteredValue,
+						time,
+						distanceBetweenTanks,
+						level,
+						gameState,
+						botPosition,
+					})
+				) {
+					setIsCorrectAnswer(true)
+					setTimeout(() => {
+						setIsCorrectAnswer(false)
+						setGameState('prepare')
+						setLevel(prev => Number(prev + 1))
+					}, 3000)
+				} else {
+					setTimeout(() => {
+						setGameState('prepare')
+					}, 8000)
+				}
+			}, time * 1000)
+		}
 	}
+
+	useEffect(() => {
+		if (level === 3) {
+			router.back()
+		}
+	}, [level, router])
+
+	const [seconds, setSeconds] = useState<number>(0.0)
+
+	useEffect(() => {
+		if (gameState === 'attack') {
+			const interval = setInterval(
+				() => setSeconds(seconds => seconds + 0.1),
+				100
+			)
+
+			return () => clearInterval(interval)
+		}
+	}, [gameState])
 
 	return (
 		<div className="w-screen h-screen bg-contain bg-[url('/assets/background.png')]">
 			<div className={styles.problemSolve}>
-				<div className={styles.controller}>
-					<button className={styles.controllerBtn}>{'					< back '}</button>
-					<div className={styles.level}>2</div>
-					<button
-						className={styles.controllerBtn}
-						onClick={() => handleAttack()}
-					>
-						{'fire >'}
-					</button>
-				</div>
-				{isCorrectAnswer && (
+				{gameState === 'prepare' && (
+					<div className={styles.controller}>
+						<button
+							onClick={() => router.back()}
+							className={styles.controllerBtn}
+						>
+							{'< back '}
+						</button>
+						<div className={styles.level}>{level}</div>
+						<button
+							className={styles.controllerBtn}
+							onClick={() => handleAttack()}
+						>
+							{'fire >'}
+						</button>
+					</div>
+				)}
+
+				{gameState === 'result' && isCorrectAnswer && (
 					<div className={styles.congratsText}>
 						<p>GOOD JOB!</p>
 						<div className={styles.stars}>
-							<Image
-								src={star}
-								className={styles.starImg}
-								alt=''
-								width={150}
-								height={150}
-							/>
-							<Image
-								src={star}
-								className={styles.starImg}
-								alt=''
-								width={150}
-								height={150}
-							/>
-							<Image
-								src={star}
-								className={styles.starImg}
-								alt=''
-								width={150}
-								height={150}
-							/>
+							{starImages.map((src, index) => (
+								<Image
+									key={index}
+									src={src}
+									className={styles.starImg}
+									alt='Star Image'
+									width={150}
+									height={150}
+								/>
+							))}
 						</div>
 					</div>
 				)}
 
-				{isAttack && <p>{Math.round(timer * 10) / 10}</p>}
+				{gameState === 'attack' && <StopWatch />}
 
-				{!isCorrectAnswer && !isAttack && (
-					<div className={styles.problemText}>
-						{resultText ? (
-							<p>{resultText}</p>
-						) : (
-							<p>
-								Imagine you're in another planet and met an alien tank, if the
-								initial speed of your bullet is {speed} m/s at the angle of 45
-								degrees and it will reach enemy in {time} seconds peaking at 800
-								meters height, what is the planet's free-fall acceleration?
-							</p>
-						)}
+				<div className={styles.mainInfo}>
+					{gameState === 'prepare' && (
+						<p>
+							Imagine you're in another planet and met an alien tank, if the
+							initial speed of your bullet is {speed} m/s at the angle of 45
+							degrees and it will reach enemy in {time} seconds peaking at 800
+							meters height, what is the planet's free-fall acceleration?
+						</p>
+					)}
 
-						{!resultText && (
-							<div className={styles.field}>
-								<label>G</label>
-								<input
-									onChange={e => setAnswer(Number(e.target.value))}
-									type='number'
-									value={answer}
-								/>
-							</div>
-						)}
-					</div>
-				)}
+					{gameState === 'result' && !isCorrectAnswer && (
+						<p>Your answer is incorrect.</p>
+					)}
+
+					{gameState === 'prepare' && (
+						<div className={styles.field}>
+							<label>Enter G </label>
+							<input ref={input} type='number' />
+						</div>
+					)}
+				</div>
 			</div>
 
 			<GameField
@@ -151,8 +159,8 @@ export function Level2() {
 				botPosition={botPosition}
 				answer={answer}
 				level={level}
-				isAttack={isAttack}
-				timer={timer}
+				gameState={gameState}
+				seconds={seconds}
 			/>
 		</div>
 	)
