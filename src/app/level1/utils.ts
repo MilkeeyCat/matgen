@@ -92,7 +92,7 @@ export const getResultText = ({
 	if (level === 1.1) {
 		return `Your answer is incorrect, if the bullet will fly with the speed ${answer} meters per second as you wrote, then it will go to ${
 			answer * time
-		} distance with given time `
+		} m distance with given time `
 	}
 
 	if (level === 1.2) {
