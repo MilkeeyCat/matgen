@@ -4,11 +4,10 @@ import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import star from '../../../public/assets/star.png'
 import { GameField } from '../gameField/GameField'
-import styles from './Level1.module.scss'
-import { getResultText, validate } from './utils'
+import styles from './Level2.module.scss'
 
-export function Level1() {
-	const [level, setLevel] = useState<number>(1)
+export function Level2() {
+	const [level, setLevel] = useState<number>(4)
 	const [distanceBetweenTanks, setDistanceBetweenTanks] = useState<number>(0)
 	const [isAttack, setIsAttack] = useState<boolean>(false)
 	const [answer, setAnswer] = useState<number>(1000)
@@ -27,7 +26,7 @@ export function Level1() {
 	}, [level])
 
 	useEffect(() => {
-		if (typeof window !== 'undefined' && level === 4) {
+		if (typeof window !== 'undefined' && level === 5) {
 			redirect('/')
 		}
 
@@ -50,25 +49,28 @@ export function Level1() {
 		}
 	}, [isAttack])
 
+	const [isClient, setIsClient] = useState(false)
+
 	const handleAttack = () => {
 		setIsAttack(true)
 		setTimeout(() => {
 			setIsAttack(false)
-			if (validate({ speed, answer, time, distanceBetweenTanks, level })) {
+			if (
+				answer ===
+				Math.floor(Math.abs((2 * 800 - 2 * speed * time * 0.707) / time ** 2))
+			) {
 				setIsCorrectAnswer(true)
 				setTimeout(() => {
 					setIsCorrectAnswer(false)
 					setLevel(prev => prev + 1)
 				}, 3000)
 			} else {
-				setResultText(
-					getResultText({ speed, answer, time, distanceBetweenTanks, level })
-				)
+				setResultText('Incorrect Answer')
 				setTimeout(() => {
 					setResultText('')
 				}, 8000)
 			}
-		}, time * 1000)
+		}, time * 1300)
 	}
 
 	return (
@@ -76,7 +78,7 @@ export function Level1() {
 			<div className={styles.problemSolve}>
 				<div className={styles.controller}>
 					<button className={styles.controllerBtn}>{'					< back '}</button>
-					<div className={styles.level}>1.{level}</div>
+					<div className={styles.level}>2</div>
 					<button
 						className={styles.controllerBtn}
 						onClick={() => handleAttack()}
@@ -117,43 +119,20 @@ export function Level1() {
 
 				{!isCorrectAnswer && !isAttack && (
 					<div className={styles.problemText}>
-						{level === 1 &&
-							(resultText ? (
-								<p>{resultText}</p>
-							) : (
-								<p>
-									If the distance between two tanks is {distanceBetweenTanks}{' '}
-									meters, what speed should the bullet have to hit the opponent
-									in {time} seconds?
-								</p>
-							))}
-						{level === 2 &&
-							(resultText ? (
-								<p>{resultText}</p>
-							) : (
-								<p>
-									If the distance between two tanks is {distanceBetweenTanks}{' '}
-									meters and the speed of th bullet is {speed} meters per
-									second, what time it will take the bullet to hit the opponent?
-								</p>
-							))}
+						{resultText ? (
+							<p>{resultText}</p>
+						) : (
+							<p>
+								Imagine you're in another planet and met an alien tank, if the
+								initial speed of your bullet is {speed} m/s at the angle of 45
+								degrees and it will reach enemy in {time} seconds peaking at 800
+								meters height, what is the planet's free-fall acceleration?
+							</p>
+						)}
 
-						{level === 3 &&
-							(resultText ? (
-								<p>{resultText}</p>
-							) : (
-								<p>
-									If the bullet hit the opponent tank in {time} seconds, flying
-									at the speed {speed} meters per second, what was the distance
-									between tanks?
-								</p>
-							))}
 						{!resultText && (
 							<div className={styles.field}>
-								<label>
-									Enter {level === 1 && 'v'} {level === 2 && 't'}{' '}
-									{level === 3 && 's'}
-								</label>
+								<label>G</label>
 								<input
 									onChange={e => setAnswer(Number(e.target.value))}
 									type='number'
@@ -173,6 +152,7 @@ export function Level1() {
 				answer={answer}
 				level={level}
 				isAttack={isAttack}
+				timer={timer}
 			/>
 		</div>
 	)

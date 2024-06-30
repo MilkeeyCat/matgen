@@ -1,4 +1,4 @@
-interface IFire {
+interface IGetTransition {
 	speed: number
 	time: number
 	distanceBetweenTanks: number
@@ -6,13 +6,13 @@ interface IFire {
 	level: number
 }
 
-export const fire = ({
+export const getTransition = ({
 	speed,
 	time,
 	distanceBetweenTanks,
 	answer,
 	level,
-}: IFire) => {
+}: IGetTransition) => {
 	if (level === 1) {
 		if (answer === speed) {
 			return speed * time
@@ -31,5 +31,21 @@ export const fire = ({
 	}
 	if (level === 3) {
 		return distanceBetweenTanks
+	}
+
+	if (level === 4) {
+		if (
+			answer <
+			Math.floor(Math.abs((2 * 800 - 2 * speed * time * 0.707) / time ** 2))
+		) {
+			return speed * time + 150
+		} else if (
+			answer >
+			Math.floor(Math.abs((2 * 800 - 2 * speed * time * 0.707) / time ** 2))
+		) {
+			return speed * time - 350
+		} else {
+			return speed * time - 100
+		}
 	}
 }

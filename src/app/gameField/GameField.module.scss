@@ -9,11 +9,19 @@
 		@apply absolute bottom-14 w-[19rem];
 	}
 
+	.rotatedGun {
+		@apply absolute bottom-48 left-32 w-20 h-2 bg-[#196011] -rotate-45;
+	}
+
 	.gun {
 		@apply absolute bottom-40 left-32 w-20 h-2 bg-[#196011];
 	}
 
 	.bullet {
 		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-[9.75rem] left-52;
+	}
+
+	.rotatedBullet {
+		@apply absolute bg-red-400 w-4 h-4 rounded-full bottom-56 left-48;
 	}
 }

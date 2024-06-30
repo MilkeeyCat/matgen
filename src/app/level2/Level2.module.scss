@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+
+.problemSolve {
+	@apply w-full h-1/2 p-8;
+
+	p {
+		color: #fff;
+		text-align: center;
+		-webkit-text-stroke-width: 1px;
+		-webkit-text-stroke-color: #000;
+		font-family: 'Titan One';
+		font-size: 40px;
+	}
+
+	.controller {
+		@apply flex justify-between;
+
+		.controllerBtn {
+			font-family: 'Titan One', sans-serif;
+			background: linear-gradient(180deg, #ffd700 60%, #937c00 100%);
+			background-clip: text;
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-size: 40px;
+			text-transform: uppercase;
+		}
+
+		.level {
+			@apply text-4xl;
+			color: #fff;
+			text-align: center;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-family: 'Titan One';
+		}
+	}
+
+	.problemText {
+		@apply w-full h-full flex flex-col gap-10 justify-center items-center;
+
+		p {
+			@apply text-center max-w-[1400px] text-4xl;
+			color: #fff;
+			text-align: center;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-family: 'Titan One';
+		}
+	}
+
+	.congratsText {
+		@apply flex flex-col gap-8 mt-16 items-center;
+
+		p {
+			color: #fff;
+			text-align: center;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-family: 'Titan One';
+			font-size: 40px;
+		}
+
+		.stars {
+			@apply flex gap-8 justify-center;
+		}
+	}
+
+	.field {
+		@apply flex items-center gap-4;
+
+		label {
+			@apply text-4xl;
+			color: #fff;
+			text-align: center;
+			-webkit-text-stroke-width: 1px;
+			-webkit-text-stroke-color: #000;
+			font-family: 'Titan One';
+		}
+		input {
+			font-family: 'Titan One';
+			font-weight: 400;
+			@apply h-20 w-28 rounded-3xl text-center text-3xl pl-2;
+		}
+	}
+}

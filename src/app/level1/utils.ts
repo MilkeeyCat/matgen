@@ -1,4 +1,4 @@
-interface IValidate {
+interface IProperties {
 	speed: number
 	time: number
 	distanceBetweenTanks: number
@@ -12,7 +12,7 @@ export const validate = ({
 	time,
 	distanceBetweenTanks,
 	level,
-}: IValidate) => {
+}: IProperties) => {
 	if (level === 1) {
 		if (Math.floor(speed) === answer) {
 			return true
@@ -34,4 +34,40 @@ export const validate = ({
 			return false
 		}
 	}
+}
+
+export const getResultText = ({
+	speed,
+	answer,
+	time,
+	distanceBetweenTanks,
+	level,
+}: IProperties): string => {
+	if (
+		typeof speed !== 'number' ||
+		typeof time !== 'number' ||
+		typeof distanceBetweenTanks !== 'number' ||
+		typeof level !== 'number' ||
+		typeof answer !== 'number'
+	) {
+		return 'Invalid input'
+	}
+	if (level === 1) {
+		return `Your answer is incorrect, if the bullet will fly with the speed ${answer} meters per second as you wrote, then it will go to ${
+			answer * time
+		} distance with given time `
+	}
+
+	if (level === 2) {
+		return `Your answer is incorrect, if the bullet will fly for ${answer} seconds as you wrote, then the bullet will fly the S equal to ${
+			answer * speed
+		} meters`
+	}
+	if (level === 3) {
+		return `Your answer is incorrect, if the bullet will fly the distance of ${answer} meters as you wrote, then with the current speed it will take it ${
+			answer / speed
+		} seconds `
+	}
+
+	return ''
 }
